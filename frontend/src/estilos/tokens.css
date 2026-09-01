@@ -1,0 +1,113 @@
+/**
+ * Design Tokens — Sistema de Gestão Interna EFG
+ * ------------------------------------------------------------------
+ * Escalas de cor a partir da paleta oficial do projeto:
+ *   green  #35A96C   jade  #25A575   teal  #17958B
+ *   cyan   #0C8A96   blue  #017FA5
+ *
+ * Cada matiz de acento mantém só os passos 7-12 da escala Radix
+ * (bordas, sólido e texto) — os passos 1-6 (fundo de app/componente,
+ * tons bem claros) foram removidos porque este projeto não pinta
+ * superfícies com tons do acento: fundo e superfície usam sempre a
+ * escala `neutral` (que continua com os 12 passos, pois essa sim é
+ * usada de ponta a ponta).
+ *
+ *   7-8   bordas (padrão, hover)
+ *   9-10  cor "sólida" (base) e seu estado de hover
+ *   11-12 texto de baixo e alto contraste sobre fundo claro
+ *
+ * A troca de tema acontece via atributo `data-theme` na raiz do
+ * documento (ex.: <html data-theme="dark">). Componentes devem
+ * consumir sempre os aliases semânticos abaixo (--color-*), nunca
+ * os passos brutos — assim trocar tema não exige tocar CSS de
+ * componente.
+ *
+ * Status de vaga vira badge/borda sólida (não fundo tingido) — daí
+ * não precisarmos dos passos claros por matiz.
+ *
+ * Faltando no projeto: modo alto-contraste dedicado (mencionado na
+ * stack). Não incluído aqui para não expandir o escopo deste
+ * commit — pode entrar como um `data-theme="high-contrast"`
+ * separado quando alguém priorizar essa frente.
+ */
+
+:root {
+  /* ---------- green (#35A96C) — passos 7-12 ---------- */
+  --green-7: #8AD0AC;  --green-8: #5AC48C;  --green-9: #35A96C;
+  --green-10: #2B945D; --green-11: #206D44; --green-12: #123322;
+
+  /* ---------- jade (#25A575) — passos 7-12 ---------- */
+  --jade-7: #83D8B8;  --jade-8: #4FCF9F;  --jade-9: #25A575;
+  --jade-10: #1D8F64; --jade-11: #146446; --jade-12: #0B261C;
+
+  /* ---------- teal (#17958B) — passos 7-12 ---------- */
+  --teal-7: #7CDED7;  --teal-8: #45D9CD;  --teal-9: #17958B;
+  --teal-10: #107D74; --teal-11: #0A504A; --teal-12: #041514;
+
+  /* ---------- cyan (#0C8A96) — passos 7-12 ---------- */
+  --cyan-7: #74DCE6;  --cyan-8: #39D6E5;  --cyan-9: #0C8A96;
+  --cyan-10: #07727C; --cyan-11: #04464C; --cyan-12: #031517;
+
+  /* ---------- blue (#017FA5) — passos 7-12 ---------- */
+  --blue-7: #6BD1F0;  --blue-8: #2BC4F3;  --blue-9: #017FA5;
+  --blue-10: #006887; --blue-11: #004154; --blue-12: #011318;
+
+  /* ---------- neutral (derivado do matiz do cyan) — 12 passos completos ---------- */
+  --neutral-1: #FEFEFE;  --neutral-2: #FAFAFA;  --neutral-3: #F4F5F5;
+  --neutral-4: #EFF0F1;  --neutral-5: #E9ECEC;  --neutral-6: #DFE2E2;
+  --neutral-7: #CED3D4;  --neutral-8: #B9C0C1;  --neutral-9: #9EA8A9;
+  --neutral-10: #7D8B8C; --neutral-11: #5B6667; --neutral-12: #262B2B;
+
+  /* ===== Aliases semânticos (o que os componentes devem usar) ===== */
+  --color-bg-app: var(--neutral-1);
+  --color-bg-surface: var(--neutral-2);
+  --color-bg-surface-hover: var(--neutral-3);
+  --color-border-subtle: var(--neutral-6);
+  --color-border: var(--neutral-7);
+  --color-border-hover: var(--neutral-8);
+  --color-text-primary: var(--neutral-12);
+  --color-text-secondary: var(--neutral-11);
+  --color-text-on-solid: #FFFFFF;
+
+  --color-brand: var(--cyan-9);
+  --color-brand-hover: var(--cyan-10);
+  --color-focus-ring: var(--cyan-8);
+
+  /* Status de vaga — badge/borda sólida, texto var(--color-text-on-solid)
+     em cima do -9. Só matizes da paleta do projeto, sem verde/vermelho
+     semafóricos "de prateleira". */
+  --color-status-disponivel: var(--green-9);
+  --color-status-disponivel-border: var(--green-8);
+  --color-status-disponivel-text: var(--green-11);
+
+  --color-status-reservado: var(--teal-9);
+  --color-status-reservado-border: var(--teal-8);
+  --color-status-reservado-text: var(--teal-11);
+
+  --color-status-ocupado: var(--blue-9);
+  --color-status-ocupado-border: var(--blue-8);
+  --color-status-ocupado-text: var(--blue-11);
+}
+
+[data-theme='dark'] {
+  --green-7: #399364;  --green-8: #41B477;  --green-9: #47CA85;
+  --green-10: #65D59A; --green-11: #9ADDBA; --green-12: #CAEAD9;
+
+  --jade-7: #2F9D74;  --jade-8: #35C08C;  --jade-9: #2AD394;
+  --jade-10: #48DEA6; --jade-11: #83E0BD; --jade-12: #B7E9D6;
+
+  --teal-7: #26A69B;  --teal-8: #2ACBBE;  --teal-9: #1AC5B8;
+  --teal-10: #21E7D7; --teal-11: #62E3D9; --teal-12: #9BE8E2;
+
+  --cyan-7: #1CA3B0;  --cyan-8: #1DC8D8;  --cyan-9: #0BB9CA;
+  --cyan-10: #08E1F6; --cyan-11: #4FDFEC; --cyan-12: #8CE4ED;
+
+  --blue-7: #1094BC;  --blue-8: #0EB5E7;  --blue-9: #00A7D9;
+  --blue-10: #03C5FF; --blue-11: #46D0F9; --blue-12: #88DBF5;
+
+  --neutral-1: #171B1C;  --neutral-2: #1E2324;  --neutral-3: #262B2C;
+  --neutral-4: #2D3434;  --neutral-5: #343C3D;  --neutral-6: #3D4748;
+  --neutral-7: #4B5758;  --neutral-8: #5E6D6E;  --neutral-9: #75888A;
+  --neutral-10: #91A0A1; --neutral-11: #BAC3C4; --neutral-12: #E9ECEC;
+
+  --color-text-on-solid: #0A0A0A;
