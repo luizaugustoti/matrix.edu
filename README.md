@@ -134,6 +134,10 @@ Comece por:
 2. `frontend/README.md`
 3. `backend/README.md`
 4. `documentos/regras-do-projeto/onde-colocar-arquivos.md`
+5. `documentos/cronograma-desenvolvimento.md`
+6. `documentos/requisitos-negocio-v1.md`
+7. `documentos/status-desenvolvimento.md`
+8. `documentos/migrations-pendentes.md`
 
 Esses arquivos respondem diretamente:
 - Onde colocar codigo
