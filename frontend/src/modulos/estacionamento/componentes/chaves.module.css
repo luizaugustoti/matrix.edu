@@ -1,0 +1,229 @@
+/*
+ * Estilos do controle de chaves.
+ * Usa os aliases e escalas de frontend/src/estilos/tokens.css.
+ * Atrasada usa contraste maximo (neutral-12) em vez de vermelho,
+ * seguindo a regra da paleta do projeto. Toda situacao tem icone e texto,
+ * entao a cor nunca e a unica pista.
+ */
+
+/* ---------- Selo de situacao ---------- */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg-app);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.selo[data-situacao='disponivel'] {
+  border-color: var(--green-8);
+  color: var(--green-11);
+}
+
+.selo[data-situacao='reservada'] {
+  border-color: var(--teal-8);
+  color: var(--teal-11);
+}
+
+.selo[data-situacao='retirada'] {
+  border-color: var(--blue-9);
+  background: var(--blue-9);
+  color: var(--color-text-on-solid);
+}
+
+.selo[data-situacao='atrasada'] {
+  border-color: var(--neutral-12);
+  background: var(--neutral-12);
+  color: var(--neutral-1);
+}
+
+.selo[data-situacao='perdida'],
+.selo[data-situacao='manutencao'],
+.selo[data-situacao='bloqueada'] {
+  border-color: var(--neutral-7);
+  background: var(--neutral-3);
+  color: var(--neutral-11);
+}
+
+/* ---------- Cartao da chave ---------- */
+.cartao {
+  --borda-situacao: var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 16px 16px 16px 18px;
+  border: 1px solid var(--color-border-subtle);
+  border-left: 5px solid var(--borda-situacao);
+  border-radius: 8px;
+  background: var(--color-bg-app);
+  color: var(--color-text-primary);
+}
+
+.cartao[data-situacao='disponivel'] { --borda-situacao: var(--green-9); }
+.cartao[data-situacao='reservada'] { --borda-situacao: var(--teal-9); }
+.cartao[data-situacao='retirada'] { --borda-situacao: var(--blue-9); }
+
+.cartao[data-situacao='atrasada'] {
+  --borda-situacao: var(--neutral-12);
+  border-color: var(--neutral-8);
+  background: var(--neutral-3);
+}
+
+.cartao[data-situacao='perdida'],
+.cartao[data-situacao='manutencao'],
+.cartao[data-situacao='bloqueada'] {
+  --borda-situacao: var(--neutral-8);
+  background: var(--neutral-2);
+}
+
+.topoCartao {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.codigo {
+  margin: 0;
+  white-space: nowrap;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+.local {
+  margin: 3px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.tipoLocal {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.detalhes {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.detalhes > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.detalhes dt {
+  min-width: 88px;
+  color: var(--color-text-secondary);
+  font-size: 0.88rem;
+}
+
+.detalhes dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.papel {
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.atraso {
+  display: inline-flex;
+  align-self: flex-start;
+  margin: 0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--neutral-12);
+  color: var(--neutral-1);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.observacao {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+/* ---------- Botoes do modulo ---------- */
+.botao,
+.botaoSecundario,
+.botaoTexto {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botao {
+  border: 1px solid var(--color-brand);
+  background: var(--color-brand);
+  color: var(--color-text-on-solid);
+}
+
+.botao:hover:not(:disabled) {
+  border-color: var(--color-brand-hover);
+  background: var(--color-brand-hover);
+}
+
+.botaoSecundario {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-app);
+  color: var(--color-text-primary);
+}
+
+.botaoSecundario:hover:not(:disabled) {
+  border-color: var(--color-border-hover);
+  background: var(--color-bg-surface-hover);
+}
+
+.botaoTexto {
+  min-height: 32px;
+  padding: 0 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.botao:disabled,
+.botaoSecundario:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.botao:focus-visible,
+.botaoSecundario:focus-visible,
+.botaoTexto:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
