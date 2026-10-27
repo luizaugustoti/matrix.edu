@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import '../../../estilos/tokens.css';
 import { CartaoChave } from '../componentes/CartaoChave';
 import estilosChave from '../componentes/chaves.module.css';
 import { DialogoDevolucao } from '../componentes/DialogoDevolucao';
 import { DialogoRetirada } from '../componentes/DialogoRetirada';
+import { HistoricoMovimentacoes } from '../componentes/HistoricoMovimentacoes';
 import { Icone } from '../componentes/Icone';
 import { useAgora } from '../hooks/useAgora';
 import { listarChaves, mensagemDeErroGuarita, usandoDadosSimulados } from '../servicos/chaves';
@@ -47,6 +48,15 @@ export function ControleChaves() {
   const [tipo, setTipo] = useState<'' | TipoLocal>('');
   const [dialogo, setDialogo] = useState<DialogoAberto>(null);
   const [confirmacao, setConfirmacao] = useState<string | null>(null);
+  const [chaveDoHistorico, setChaveDoHistorico] = useState('');
+  const [versaoHistorico, setVersaoHistorico] = useState(0);
+  const tituloHistoricoRef = useRef<HTMLHeadingElement>(null);
+
+  function abrirHistorico(chave: Chave) {
+    setChaveDoHistorico(chave.id);
+    tituloHistoricoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    tituloHistoricoRef.current?.focus({ preventScroll: true });
+  }
 
   useEffect(() => {
     if (!confirmacao) return undefined;
@@ -56,9 +66,30 @@ export function ControleChaves() {
 
   function substituirChave(atualizada: Chave) {
     setChaves((atuais) => atuais.map((chave) => (chave.id === atualizada.id ? atualizada : chave)));
+    setVersaoHistorico((atual) => atual + 1);
   }
 
   function acoesDa(chave: Chave, situacao: SituacaoChave) {
+    const historico = (
+      <button
+        type="button"
+        className={estilosChave.botaoSecundario}
+        onClick={() => abrirHistorico(chave)}
+        aria-label={`Ver histórico da chave ${chave.codigo}`}
+      >
+        <Icone nome="historico" />
+        Histórico
+      </button>
+    );
+    return (
+      <>
+        {acaoPrincipalDa(chave, situacao)}
+        {historico}
+      </>
+    );
+  }
+
+  function acaoPrincipalDa(chave: Chave, situacao: SituacaoChave) {
     if (situacao === 'disponivel' || situacao === 'reservada') {
       return (
         <button
@@ -256,6 +287,15 @@ export function ControleChaves() {
               </ul>
             )}
           </section>
+
+          <HistoricoMovimentacoes
+            ref={tituloHistoricoRef}
+            chaves={chaves}
+            chaveId={chaveDoHistorico}
+            aoMudarChave={setChaveDoHistorico}
+            agora={agora}
+            versao={versaoHistorico}
+          />
         </>
       )}
 
