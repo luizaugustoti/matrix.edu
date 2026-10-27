@@ -336,7 +336,7 @@ function ResultadoConsulta({ consulta, agora, registrando, aoRegistrarEntrada, a
               {autorizacao.veiculo.modelo} · {autorizacao.veiculo.cor}
             </dd>
           </div>
-          {autorizacao.valida_ate && (
+          {autorizacao.valida_ate && (situacao === 'aprovada' || situacao === 'expirada') && (
             <div>
               <dt>Válida até</dt>
               <dd>

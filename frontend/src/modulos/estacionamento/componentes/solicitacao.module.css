@@ -1,0 +1,115 @@
+/* Formulario de solicitacao de autorizacao do estacionamento. */
+
+.grupo {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+}
+
+.grupo legend {
+  padding: 0 6px;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.duasColunas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.placa {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.placa[readonly] {
+  background: var(--color-bg-surface);
+}
+
+.opcoes {
+  display: flex;
+  gap: 10px;
+  min-height: 40px;
+  align-items: center;
+}
+
+.opcao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-primary);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.opcao input {
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--color-brand);
+}
+
+.anexo {
+  padding: 12px;
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+}
+
+.anexo[data-preenchido='true'] {
+  border-style: solid;
+  border-color: var(--green-8);
+}
+
+.anexoTitulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-primary);
+}
+
+.anexo[data-preenchido='true'] .anexoTitulo svg {
+  color: var(--green-11);
+}
+
+.anexo input[type='file'] {
+  min-height: auto;
+  padding: 8px;
+  font-size: 0.85rem;
+}
+
+.confirmacao {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.confirmacao input {
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex: none;
+  accent-color: var(--color-brand);
+}
+
+@media (max-width: 640px) {
+  .duasColunas {
+    grid-template-columns: 1fr;
+  }
+
+  .grupo {
+    padding: 12px;
+  }
+}

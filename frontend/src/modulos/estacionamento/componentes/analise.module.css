@@ -1,0 +1,70 @@
+/* Janela de analise e detalhes da autorizacao. */
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.topoTexto {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+
+.subtitulo {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.documentos {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.documento {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  color: var(--color-text-secondary);
+}
+
+.documentoTexto {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.documento a {
+  text-decoration: none;
+}
+
+.botoes {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .documento {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .documento > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .botoes > * {
+    flex: 1 1 100%;
+  }
+}

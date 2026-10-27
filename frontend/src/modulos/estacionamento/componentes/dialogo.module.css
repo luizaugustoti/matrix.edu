@@ -3,12 +3,17 @@
 .dialogo {
   width: min(520px, calc(100% - 32px));
   max-height: calc(100% - 32px);
+  overflow: auto;
   padding: 0;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: var(--color-bg-app);
   color: var(--color-text-primary);
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+}
+
+.dialogo[data-largura='larga'] {
+  width: min(680px, calc(100% - 32px));
 }
 
 .dialogo::backdrop {
