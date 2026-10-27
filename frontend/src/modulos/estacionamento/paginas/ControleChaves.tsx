@@ -1,12 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import '../../../estilos/tokens.css';
 import { CartaoChave } from '../componentes/CartaoChave';
+import estilosChave from '../componentes/chaves.module.css';
+import { DialogoDevolucao } from '../componentes/DialogoDevolucao';
+import { DialogoRetirada } from '../componentes/DialogoRetirada';
 import { Icone } from '../componentes/Icone';
 import { useAgora } from '../hooks/useAgora';
 import { listarChaves, mensagemDeErroGuarita, usandoDadosSimulados } from '../servicos/chaves';
 import type { Chave, SituacaoChave, TipoLocal } from '../tipos/chaves';
 import { formatarDuracao, formatarHora, minutosDeAtraso, situacaoDaChave } from '../utilitarios/situacao';
 import estilos from './ControleChaves.module.css';
+
+type DialogoAberto = { tipo: 'retirada' | 'devolucao'; chave: Chave } | null;
 
 type Grupo = 'disponivel' | 'em_uso' | 'atrasada' | 'indisponivel';
 type Filtro = 'todas' | Grupo;
@@ -40,6 +45,48 @@ export function ControleChaves() {
   const [filtro, setFiltro] = useState<Filtro>('todas');
   const [busca, setBusca] = useState('');
   const [tipo, setTipo] = useState<'' | TipoLocal>('');
+  const [dialogo, setDialogo] = useState<DialogoAberto>(null);
+  const [confirmacao, setConfirmacao] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!confirmacao) return undefined;
+    const id = window.setTimeout(() => setConfirmacao(null), 6000);
+    return () => window.clearTimeout(id);
+  }, [confirmacao]);
+
+  function substituirChave(atualizada: Chave) {
+    setChaves((atuais) => atuais.map((chave) => (chave.id === atualizada.id ? atualizada : chave)));
+  }
+
+  function acoesDa(chave: Chave, situacao: SituacaoChave) {
+    if (situacao === 'disponivel' || situacao === 'reservada') {
+      return (
+        <button
+          type="button"
+          className={estilosChave.botao}
+          onClick={() => setDialogo({ tipo: 'retirada', chave })}
+          aria-label={`Registrar retirada da chave ${chave.codigo}`}
+        >
+          <Icone nome="saida" />
+          Registrar retirada
+        </button>
+      );
+    }
+    if (situacao === 'retirada' || situacao === 'atrasada') {
+      return (
+        <button
+          type="button"
+          className={estilosChave.botao}
+          onClick={() => setDialogo({ tipo: 'devolucao', chave })}
+          aria-label={`Registrar devolução da chave ${chave.codigo}`}
+        >
+          <Icone nome="entrada" />
+          Registrar devolução
+        </button>
+      );
+    }
+    return null;
+  }
 
   const carregar = useCallback(async () => {
     setErro(null);
@@ -119,6 +166,15 @@ export function ControleChaves() {
       {!carregando && !erro && (
         <>
           <div aria-live="polite">
+            {confirmacao && (
+              <p className={estilos.confirmacao}>
+                <Icone nome="check" tamanho={18} />
+                {confirmacao}
+              </p>
+            )}
+          </div>
+
+          <div aria-live="polite">
             {atrasadas.length > 0 && (
               <section className={estilos.alerta} aria-labelledby="alerta-atrasadas">
                 <Icone nome="alerta" tamanho={22} />
@@ -192,15 +248,40 @@ export function ControleChaves() {
               <p className={estilos.vazio}>Nenhuma chave corresponde aos filtros escolhidos.</p>
             ) : (
               <ul className={estilos.grade}>
-                {visiveis.map(({ chave }) => (
+                {visiveis.map(({ chave, situacao }) => (
                   <li key={chave.id}>
-                    <CartaoChave chave={chave} agora={agora} />
+                    <CartaoChave chave={chave} agora={agora} acoes={acoesDa(chave, situacao)} />
                   </li>
                 ))}
               </ul>
             )}
           </section>
         </>
+      )}
+
+      {dialogo?.tipo === 'retirada' && (
+        <DialogoRetirada
+          chave={dialogo.chave}
+          aoFechar={() => setDialogo(null)}
+          aoConcluir={(atualizada, pessoa) => {
+            substituirChave(atualizada);
+            setDialogo(null);
+            setConfirmacao(`Retirada da chave ${atualizada.codigo} registrada para ${pessoa.nome_completo}.`);
+          }}
+        />
+      )}
+
+      {dialogo?.tipo === 'devolucao' && (
+        <DialogoDevolucao
+          chave={dialogo.chave}
+          agora={agora}
+          aoFechar={() => setDialogo(null)}
+          aoConcluir={(atualizada, pessoa) => {
+            substituirChave(atualizada);
+            setDialogo(null);
+            setConfirmacao(`Devolução da chave ${atualizada.codigo} registrada${pessoa ? ` (${pessoa})` : ''}.`);
+          }}
+        />
       )}
     </main>
   );
