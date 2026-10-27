@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EFG Sistema | Modo Apresentação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="apresentacao.css" />
+  </head>
+  <body>
+    <div class="deck">
+      <button class="nav-btn nav-prev" aria-label="Slide anterior">←</button>
+      <button class="nav-btn nav-next" aria-label="Próximo slide">→</button>
+
+      <section class="slide active">
+        <div class="slide-content center">
+          <p class="eyebrow">Apresentação rápida</p>
+          <h1>EFG Sistema</h1>
+          <p class="lead">
+            Plataforma acadêmica para centralizar gestão escolar, operação e acompanhamento institucional.
+          </p>
+          <div class="badge-row">
+            <span>React</span>
+            <span>TypeScript</span>
+            <span>FastAPI</span>
+            <span>Python</span>
+            <span>Supabase</span>
+            <span>PostgreSQL</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-content">
+          <p class="eyebrow">Tecnologias</p>
+          <h2>Stack do projeto</h2>
+          <div class="grid two">
+            <div class="card">
+              <h3>Frontend</h3>
+              <p>React + TypeScript + Vite para interface, páginas e componentes.</p>
+            </div>
+            <div class="card">
+              <h3>Backend</h3>
+              <p>FastAPI em Python para regras de negócio e endpoints REST.</p>
+            </div>
+            <div class="card">
+              <h3>Banco</h3>
+              <p>Supabase + PostgreSQL para persistência, autenticação e segurança.</p>
+            </div>
+            <div class="card">
+              <h3>Validação</h3>
+              <p>Zod e Pydantic para garantir dados corretos e consistentes.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-content">
+          <p class="eyebrow">Estrutura</p>
+          <h2>Responsabilidade das pastas</h2>
+          <div class="grid two compact">
+            <div class="folder-item"><strong>frontend</strong><span>Interface e páginas do sistema</span></div>
+            <div class="folder-item"><strong>backend</strong><span>API, regras e autenticação</span></div>
+            <div class="folder-item"><strong>banco</strong><span>Migrations, seeds e segurança</span></div>
+            <div class="folder-item"><strong>documentos</strong><span>Requisitos, guias e arquitetura</span></div>
+            <div class="folder-item"><strong>testes</strong><span>Validação e garantia de qualidade</span></div>
+            <div class="folder-item"><strong>README</strong><span>Visão geral do projeto</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-content">
+          <p class="eyebrow">Conexão</p>
+          <h2>Como a API acessa o banco</h2>
+          <pre><code>from supabase import Client, create_client
+from app.configuracoes.config import settings
+
+
+def get_supabase_client() -&gt; Client:
+    if not settings.supabase_configured:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Supabase nao configurado.",
+        )
+
+    return create_client(settings.supabase_url, settings.supabase_service_role_key)</code></pre>
+          <p class="caption">
+            Essa função valida a configuração e cria o cliente que será usado pelos serviços do backend.
+          </p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-content">
+          <p class="eyebrow">Consulta</p>
+          <h2>Exemplo de leitura de dados</h2>
+          <pre><code>def listar_unidades(cliente: Client) -&gt; list[dict]:
+    try:
+        resposta = (
+            cliente.table("unidades")
+            .select("*")
+            .eq("ativo", True)
+            .order("nome")
+            .execute()
+        )
+        return resposta.data or []
+    except Exception:
+        return []</code></pre>
+          <p class="caption">
+            O backend consulta a tabela, filtra registros ativos e entrega os dados para a interface.
+          </p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-content center last">
+          <p class="eyebrow">Status</p>
+          <h2>Projeto em evolução</h2>
+          <ul class="check-list">
+            <li>✅ Login funcionando</li>
+            <li>✅ Arquitetura montada</li>
+            <li>✅ Front e back organizados</li>
+            <li>⚠️ Migrations pendentes em cursos e turmas</li>
+            <li>🔄 Integração Supabase em andamento</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <script src="apresentacao.js"></script>
+  </body>
+</html>
