@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EFG Sistema | Tecnologias e Estrutura</title>
+    <meta
+      name="description"
+      content="Apresentação rápida do sistema EFG com tecnologias utilizadas e explicação da responsabilidade de cada pasta."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="brand">
+          <span class="brand-mark">EFG</span>
+          <span>Sistema</span>
+        </div>
+        <nav>
+          <a href="#inicio">Início</a>
+          <a href="#tecnologias">Tecnologias</a>
+          <a href="#pastas">Pastas</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="inicio" class="hero">
+        <div class="container intro-box">
+          <p class="eyebrow">Apresentação rápida</p>
+          <h1>EFG Sistema</h1>
+          <p class="lead">
+            Sistema acadêmico pensado para centralizar processos de gestão escolar,
+            operação e acompanhamento institucional em uma plataforma organizada e modular.
+          </p>
+          <div class="badge-row">
+            <span class="badge">React</span>
+            <span class="badge">TypeScript</span>
+            <span class="badge">FastAPI</span>
+            <span class="badge">Python</span>
+            <span class="badge">Supabase</span>
+            <span class="badge">PostgreSQL</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="tecnologias" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Tecnologias</p>
+            <h2>O que usamos no projeto</h2>
+          </div>
+
+          <div class="tech-grid">
+            <article class="card">
+              <div class="icon">🖥️</div>
+              <h3>Frontend</h3>
+              <p>React + TypeScript + Vite para construir a interface web com navegação, formulários e páginas modulares.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">⚙️</div>
+              <h3>Backend</h3>
+              <p>FastAPI em Python para expor endpoints REST, processar regras de negócio e conectar com o banco.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">🗄️</div>
+              <h3>Banco e autenticação</h3>
+              <p>Supabase + PostgreSQL para persistência, segurança, autenticação e integração com dados do sistema.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">📘</div>
+              <h3>Validations</h3>
+              <p>Zod no frontend e Pydantic no backend para validar entradas e manter a aplicação segura.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pastas" class="section alt">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Estrutura</p>
+            <h2>O que cada pasta é responsável</h2>
+          </div>
+
+          <div class="folder-grid">
+            <article class="folder-card">
+              <span class="folder-tag">frontend</span>
+              <h3>Interface do usuário</h3>
+              <p>Responsável pela parte visual da aplicação: páginas, componentes, rotas, estilos e integração com a API.</p>
+            </article>
+
+            <article class="folder-card">
+              <span class="folder-tag">backend</span>
+              <h3>Lógica e regras do sistema</h3>
+              <p>Guarda a API REST, serviços, autenticação, schemas e regras de negócio do projeto.</p>
+            </article>
+
+            <article class="folder-card">
+              <span class="folder-tag">banco</span>
+              <h3>Dados e estrutura do banco</h3>
+              <p>Contém migrations, seeds, políticas de segurança e scripts de base para o PostgreSQL/Supabase.</p>
+            </article>
+
+            <article class="folder-card">
+              <span class="folder-tag">documentos</span>
+              <h3>Documentação</h3>
+              <p>Arquivos de requisitos, guias de instalação, arquitetura, cronograma e regras de desenvolvimento.</p>
+            </article>
+
+            <article class="folder-card">
+              <span class="folder-tag">testes</span>
+              <h3>Validação</h3>
+              <p>Armazena testes automatizados e scripts para verificar se o sistema está funcionando corretamente.</p>
+            </article>
+
+            <article class="folder-card">
+              <span class="folder-tag">README</span>
+              <h3>Visão geral do projeto</h3>
+              <p>Explica o objetivo do sistema, a arquitetura, a organização e os passos de execução para onboarding.</p>
+            </article>
+          </div>
+
+          <div class="code-box">
+            <p class="eyebrow">1) Conexão com o banco</p>
+            <pre><code>from supabase import Client, create_client
+from app.configuracoes.config import settings
+
+
+def get_supabase_client() -&gt; Client:
+    if not settings.supabase_configured:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Supabase nao configurado. Preencha o arquivo backend/.env.",
+        )
+
+    return create_client(settings.supabase_url, settings.supabase_service_role_key)</code></pre>
+            <p class="code-explain">
+              Esse trecho centraliza a conexão do backend com o Supabase. Ele valida se as variáveis de ambiente estão configuradas e cria um cliente para que os serviços consultem ou gravem dados de forma segura.
+            </p>
+          </div>
+
+          <div class="code-box">
+            <p class="eyebrow">2) Consulta ao banco</p>
+            <pre><code>def listar_unidades(cliente: Client) -&gt; list[dict]:
+    try:
+        resposta = (
+            cliente.table("unidades")
+            .select("*")
+            .eq("ativo", True)
+            .order("nome")
+            .execute()
+        )
+        return resposta.data or []
+    except Exception as error:
+        _tratar_erro_banco(error)
+        return []</code></pre>
+            <p class="code-explain">
+              Aqui a API consulta a tabela <strong>unidades</strong>, filtra apenas registros ativos e ordena por nome. Esse padrão é usado para listar dados reais do banco e devolver para a interface do sistema.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>EFG Sistema</p>
+        <p>Stack moderna e arquitetura modular</p>
+      </div>
+    </footer>
+  </body>
+</html>
