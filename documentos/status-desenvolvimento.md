@@ -1,6 +1,6 @@
 # Status do Desenvolvimento
 
-Atualizado em: 07/09/2026
+Atualizado em: 26/10/2026
 
 ## Objetivo atual
 
@@ -89,6 +89,9 @@ modulos conforme o cronograma.
 - As oito tabelas da fundacao foram confirmadas via API REST com resposta `200`.
 - Procedimento de aplicação e verificação das migrations documentado em `banco/README.md`.
 - Arquivos Python compilam sem erros de sintaxe.
+- Branch `front` sincronizada com a `main`.
+- Tela de controle de chaves da guarita criada em `frontend/src/modulos/estacionamento/` (rota `/guarita/chaves`), com painel por situacao, alerta de atrasadas, retirada so por pessoas autorizadas, devolucao e historico de movimentacoes.
+- Controle de chaves funcionando com dados simulados; contrato da API documentado em `frontend/src/modulos/estacionamento/README.md`.
 
 ## Em andamento
 
@@ -110,6 +113,7 @@ modulos conforme o cronograma.
 - O build frontend ja foi gerado; o npm informou 4 vulnerabilidades (3 moderadas e 1 alta).
 - Validacao do login real com usuario do Supabase e fluxos de autenticacao do browser.
 - Ajuste final da navegacao protegida depois da autenticao real.
+- Rotas da guarita no back-end (`/guarita/chaves`) para substituir os dados simulados do controle de chaves.
 
 ## Bloqueios conhecidos
 
