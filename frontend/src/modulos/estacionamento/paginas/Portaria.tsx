@@ -2,6 +2,7 @@ import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../estilos/tokens.css';
 import { AbasGuarita } from '../componentes/AbasGuarita';
+import { HistoricoVeiculos } from '../componentes/HistoricoVeiculos';
 import estilosBotao from '../componentes/chaves.module.css';
 import { Icone } from '../componentes/Icone';
 import { Placa } from '../componentes/Placa';
@@ -57,6 +58,7 @@ export function Portaria() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
   const [confirmacao, setConfirmacao] = useState<string | null>(null);
+  const [versaoHistorico, setVersaoHistorico] = useState(0);
 
   const carregar = useCallback(async () => {
     try {
@@ -68,6 +70,7 @@ export function Portaria() {
       setNoPatio(patio);
       setMovimentacoes(historico);
       setAutorizacoes(lista);
+      setVersaoHistorico((atual) => atual + 1);
       setErro(null);
     } catch (error: unknown) {
       setErro(mensagemDeErroGuarita(error));
@@ -296,6 +299,8 @@ export function Portaria() {
           )}
         </section>
       </div>
+
+      <HistoricoVeiculos agora={agora} versao={versaoHistorico} />
     </main>
   );
 }
