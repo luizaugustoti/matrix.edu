@@ -1,0 +1,175 @@
+/* Historico de movimentacoes de chaves. */
+
+.painel {
+  margin-top: 20px;
+}
+
+.painel h2 {
+  scroll-margin-top: 120px;
+}
+
+.painel h2:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 4px;
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.filtrosLinha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filtrosLinha .campo {
+  min-width: 180px;
+}
+
+.campo input {
+  width: 100%;
+}
+
+.campo input:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 1px;
+}
+
+.campo {
+  display: grid;
+  gap: 6px;
+  min-width: min(280px, 100%);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.campo select {
+  width: 100%;
+}
+
+.campo select:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 1px;
+}
+
+/* A tabela rola dentro do painel no celular, sem rolar a pagina. */
+.rolagem {
+  overflow-x: auto;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+}
+
+.rolagem:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.tabela {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.legenda {
+  padding: 10px 14px;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  text-align: left;
+  caption-side: top;
+}
+
+.tabela th,
+.tabela td {
+  padding: 12px 14px;
+  border-top: 1px solid var(--color-border-subtle);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabela thead th {
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tabela tbody th {
+  font-weight: 400;
+}
+
+.tabela tbody tr:hover {
+  background: var(--color-bg-surface);
+}
+
+.codigo {
+  display: block;
+  font-weight: 700;
+}
+
+.secundario {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+.numero {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.situacao {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.situacao[data-tipo='prazo'] {
+  border-color: var(--green-8);
+  color: var(--green-11);
+}
+
+.situacao[data-tipo='aberta'] {
+  border-color: var(--blue-9);
+  background: var(--blue-9);
+  color: var(--color-text-on-solid);
+}
+
+.situacao[data-tipo='atrasada'] {
+  border-color: var(--neutral-12);
+  background: var(--neutral-12);
+  color: var(--neutral-1);
+}
+
+.situacao[data-tipo='atraso'] {
+  border-color: var(--neutral-12);
+  color: var(--neutral-12);
+}
+
+.observacao {
+  display: block;
+  max-width: 220px;
+  margin-top: 6px;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.mais {
+  margin-top: 14px;
+}

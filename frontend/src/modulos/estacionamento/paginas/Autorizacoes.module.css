@@ -1,0 +1,175 @@
+/* Tela de autorizacoes do estacionamento. */
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg-app);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filtro:hover {
+  border-color: var(--color-border-hover);
+}
+
+.filtro[aria-pressed='true'] {
+  border-color: var(--color-brand);
+  background: var(--color-brand);
+  color: var(--color-text-on-solid);
+}
+
+.filtro:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.contador {
+  min-width: 22px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--color-bg-surface-hover);
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.filtro[aria-pressed='true'] .contador {
+  background: rgba(255, 255, 255, 0.25);
+  color: inherit;
+}
+
+.busca {
+  max-width: 420px;
+  margin-bottom: 16px;
+}
+
+/* ---------- Lista ---------- */
+.lista {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  --borda: var(--color-border);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1.6fr) minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border-subtle);
+  border-left: 5px solid var(--borda);
+  border-radius: 8px;
+  background: var(--color-bg-app);
+}
+
+.item[data-situacao='pendente'],
+.item[data-situacao='em_analise'] { --borda: var(--blue-9); }
+.item[data-situacao='aprovada'] { --borda: var(--green-9); }
+.item[data-situacao='expirada'],
+.item[data-situacao='rejeitada'] { --borda: var(--neutral-12); }
+.item[data-situacao='cancelada'] {
+  --borda: var(--neutral-8);
+  background: var(--neutral-2);
+}
+
+.itemTexto {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  font-size: 0.9rem;
+}
+
+.itemTexto strong {
+  font-size: 0.98rem;
+}
+
+.itemSituacao {
+  display: grid;
+  gap: 5px;
+  justify-items: start;
+  font-size: 0.82rem;
+}
+
+.itemAcoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.secundario {
+  color: var(--color-text-secondary);
+}
+
+.motivo {
+  color: var(--color-text-secondary);
+  font-size: 0.84rem;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .item {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .itemSituacao {
+    grid-column: 2;
+  }
+
+  .itemAcoes {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .item {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .itemSituacao,
+  .itemAcoes {
+    grid-column: auto;
+  }
+
+  .itemAcoes {
+    width: 100%;
+  }
+
+  .itemAcoes > * {
+    flex: 1;
+  }
+
+  .busca {
+    max-width: none;
+  }
+}

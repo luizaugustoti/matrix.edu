@@ -7,6 +7,9 @@ import { Fundacao } from '../paginas/Fundacao';
 import { Horarios } from '../paginas/Horarios';
 import { Login } from '../paginas/Login';
 import { Turmas } from '../paginas/Turmas';
+import { ControleChaves } from '../modulos/estacionamento/paginas/ControleChaves';
+import { Portaria } from '../modulos/estacionamento/paginas/Portaria';
+import { Autorizacoes } from '../modulos/estacionamento/paginas/Autorizacoes';
 
 // Arquivo central de navegacao.
 // Deve ser alterado quando novas paginas/modulos forem adicionados.
@@ -49,6 +52,7 @@ function ProtectedLayout() {
           <a href="/componentes">Componentes</a>
           <a href="/turmas">Turmas</a>
           <a href="/horarios">Horarios</a>
+          <a href="/guarita/chaves">Guarita</a>
         </nav>
 
         <div className="app-topbar__user">
@@ -75,6 +79,9 @@ export function AppRoutes() {
         <Route path="/componentes" element={<Componentes />} />
         <Route path="/turmas" element={<Turmas />} />
         <Route path="/horarios" element={<Horarios />} />
+        <Route path="/guarita/chaves" element={<ControleChaves />} />
+        <Route path="/guarita/estacionamento" element={<Portaria />} />
+        <Route path="/guarita/autorizacoes" element={<Autorizacoes />} />
         <Route path="/cantina" element={<PlaceholderPage titulo="Modulo Cantina" />} />
         <Route path="/laboratorios" element={<PlaceholderPage titulo="Modulo Laboratorios" />} />
         <Route path="/busca-ativa" element={<PlaceholderPage titulo="Modulo Busca Ativa" />} />

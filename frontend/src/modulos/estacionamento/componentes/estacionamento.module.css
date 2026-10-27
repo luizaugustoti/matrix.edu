@@ -1,0 +1,165 @@
+/* Componentes compartilhados das telas de estacionamento e da guarita. */
+
+/* ---------- Abas da guarita ---------- */
+.abas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 0 28px;
+  padding: 4px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 10px;
+  background: var(--color-bg-app);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.aba {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 7px;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.aba:hover {
+  background: var(--color-bg-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.aba[aria-current='page'] {
+  background: var(--color-brand);
+  color: var(--color-text-on-solid);
+}
+
+.aba:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ---------- Placa Mercosul ---------- */
+.placa {
+  display: inline-grid;
+  grid-template-rows: auto auto;
+  min-width: 108px;
+  overflow: hidden;
+  border: 2px solid #1b1b1b;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #111111;
+  text-align: center;
+  line-height: 1;
+}
+
+.placaFaixa {
+  padding: 2px 0;
+  background: #1f4ea3;
+  color: #ffffff;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+}
+
+.placaTexto {
+  padding: 5px 10px 6px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.placa[data-tamanho='grande'] {
+  min-width: 190px;
+  border-width: 3px;
+  border-radius: 8px;
+}
+
+.placa[data-tamanho='grande'] .placaFaixa {
+  padding: 4px 0;
+  font-size: 0.7rem;
+}
+
+.placa[data-tamanho='grande'] .placaTexto {
+  padding: 8px 16px 10px;
+  font-size: 1.9rem;
+}
+
+/* ---------- Selo da autorizacao ---------- */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg-app);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.selo[data-situacao='aprovada'] {
+  border-color: var(--green-8);
+  color: var(--green-11);
+}
+
+.selo[data-situacao='pendente'],
+.selo[data-situacao='em_analise'] {
+  border-color: var(--blue-9);
+  background: var(--blue-9);
+  color: var(--color-text-on-solid);
+}
+
+.selo[data-situacao='expirada'],
+.selo[data-situacao='rejeitada'] {
+  border-color: var(--neutral-12);
+  background: var(--neutral-12);
+  color: var(--neutral-1);
+}
+
+.selo[data-situacao='cancelada'] {
+  border-color: var(--neutral-7);
+  background: var(--neutral-3);
+  color: var(--neutral-11);
+}
+
+.vencendo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border: 1px dashed var(--neutral-11);
+  border-radius: 4px;
+  color: var(--neutral-12);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .abas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .aba {
+    justify-content: center;
+    gap: 5px;
+    padding: 0 4px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .aba svg {
+    display: none;
+  }
+}
