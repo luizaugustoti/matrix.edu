@@ -8,6 +8,7 @@ import { Horarios } from '../paginas/Horarios';
 import { Login } from '../paginas/Login';
 import { Turmas } from '../paginas/Turmas';
 import { ControleChaves } from '../modulos/estacionamento/paginas/ControleChaves';
+import { Portaria } from '../modulos/estacionamento/paginas/Portaria';
 
 // Arquivo central de navegacao.
 // Deve ser alterado quando novas paginas/modulos forem adicionados.
@@ -78,6 +79,7 @@ export function AppRoutes() {
         <Route path="/turmas" element={<Turmas />} />
         <Route path="/horarios" element={<Horarios />} />
         <Route path="/guarita/chaves" element={<ControleChaves />} />
+        <Route path="/guarita/estacionamento" element={<Portaria />} />
         <Route path="/cantina" element={<PlaceholderPage titulo="Modulo Cantina" />} />
         <Route path="/laboratorios" element={<PlaceholderPage titulo="Modulo Laboratorios" />} />
         <Route path="/busca-ativa" element={<PlaceholderPage titulo="Modulo Busca Ativa" />} />

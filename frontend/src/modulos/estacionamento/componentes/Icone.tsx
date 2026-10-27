@@ -15,7 +15,10 @@ export type NomeIcone =
   | 'historico'
   | 'busca'
   | 'fechar'
-  | 'entrada';
+  | 'entrada'
+  | 'carro'
+  | 'documento'
+  | 'anexo';
 
 const desenhos: Record<NomeIcone, ReactNode> = {
   chave: (
@@ -89,6 +92,25 @@ const desenhos: Record<NomeIcone, ReactNode> = {
       <path d="M18 6 6 18" />
       <path d="m6 6 12 12" />
     </>
+  ),
+  carro: (
+    <>
+      <path d="M5 17H3v-5l2-5h14l2 5v5h-2" />
+      <path d="M3 12h18" />
+      <circle cx="7.5" cy="17" r="2" />
+      <circle cx="16.5" cy="17" r="2" />
+      <path d="M9.5 17h5" />
+    </>
+  ),
+  documento: (
+    <>
+      <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z" />
+      <path d="M14 3v6h6" />
+      <path d="M8 13h8M8 17h5" />
+    </>
+  ),
+  anexo: (
+    <path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 7" />
   ),
 };
 

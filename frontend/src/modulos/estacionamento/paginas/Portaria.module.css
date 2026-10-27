@@ -1,0 +1,281 @@
+/* Tela da portaria do estacionamento. */
+
+/* ---------- Indicadores ---------- */
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.indicador {
+  --marca: var(--color-border);
+  display: grid;
+  gap: 8px;
+  height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border-subtle);
+  border-top: 4px solid var(--marca);
+  border-radius: 8px;
+  background: var(--color-bg-app);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+a.indicador:hover {
+  border-color: var(--color-border-hover);
+  border-top-color: var(--marca);
+}
+
+a.indicador:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.indicador[data-tipo='patio'] { --marca: var(--blue-9); }
+.indicador[data-tipo='entradas'] { --marca: var(--green-9); }
+.indicador[data-tipo='vencendo'] { --marca: var(--neutral-12); }
+.indicador[data-tipo='pendentes'] { --marca: var(--teal-9); }
+
+.indicadorRotulo {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.indicadorNumero {
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.indicadorDica {
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+}
+
+/* ---------- Consulta de placa ---------- */
+.grade {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.consulta h2,
+.patio h2 {
+  margin-bottom: 4px;
+}
+
+.subtitulo {
+  margin: 0 0 18px;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.formConsulta {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+}
+
+.campoPlaca {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.campoPlaca input {
+  width: 100%;
+  min-height: 48px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.campoPlaca input:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 1px;
+}
+
+.botaoConsultar {
+  min-height: 48px;
+}
+
+.erroCampo {
+  margin: 8px 0 0;
+  color: #a32d35;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.resultado {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid var(--color-border-subtle);
+  border-left: 5px solid var(--borda, var(--color-border));
+  border-radius: 8px;
+  background: var(--color-bg-app);
+}
+
+.resultado[data-estado='liberado'] { --borda: var(--green-9); }
+.resultado[data-estado='no_patio'] { --borda: var(--blue-9); }
+.resultado[data-estado='bloqueado'] { --borda: var(--neutral-12); }
+
+.resultadoTopo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dados {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.dados > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.dados dt {
+  min-width: 96px;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.dados dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.bloqueio {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: var(--neutral-12);
+  color: var(--neutral-1);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.bloqueio svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.liberado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--green-11);
+  font-weight: 700;
+}
+
+.aviso {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 4px solid var(--neutral-11);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  font-size: 0.86rem;
+}
+
+.acaoGrande {
+  min-height: 46px;
+  font-size: 0.95rem;
+}
+
+/* ---------- Veiculos no patio ---------- */
+.listaPatio {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.itemPatio {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  background: var(--color-bg-app);
+}
+
+.itemPatio[data-vencida='true'] {
+  border-color: var(--neutral-8);
+  background: var(--neutral-3);
+}
+
+.itemTexto {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  font-size: 0.88rem;
+}
+
+.itemTexto strong {
+  font-size: 0.95rem;
+}
+
+.secundario {
+  color: var(--color-text-secondary);
+}
+
+.tempo {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 960px) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .indicadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .indicadorNumero {
+    font-size: 1.6rem;
+  }
+
+  .formConsulta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .itemPatio {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-items: start;
+  }
+
+  .itemPatio > button {
+    justify-self: stretch;
+  }
+}

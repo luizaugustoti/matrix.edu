@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import '../../../estilos/tokens.css';
+import { AbasGuarita } from '../componentes/AbasGuarita';
 import { CartaoChave } from '../componentes/CartaoChave';
 import estilosChave from '../componentes/chaves.module.css';
 import { DialogoDevolucao } from '../componentes/DialogoDevolucao';
@@ -169,6 +170,8 @@ export function ControleChaves() {
 
   return (
     <main className="shell">
+      <AbasGuarita />
+
       <header className="page-header">
         <div>
           <p className="eyebrow">Guarita</p>
