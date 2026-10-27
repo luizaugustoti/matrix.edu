@@ -101,4 +101,109 @@ O status "atrasada" nao e gravado: o front calcula a partir de
 ### Proximos passos sugeridos
 - Cadastro de chaves e de autorizacoes por chave (coordenacao).
 - Reserva de chave vinculada a reserva de laboratorio.
-- Painel de vagas do estacionamento.
+
+---
+
+## Estacionamento (guarita e coordenacao)
+
+Requisitos atendidos: RF-EST-01 (envio digital dos documentos) e RF-EST-02
+(termo assinado com renovacao a cada 6 meses). O estacionamento e livre, sem
+vagas numeradas: a guarita controla quem pode entrar, quem esta no patio e o
+historico de entradas e saidas.
+
+Enquanto a assinatura digital via gov.br nao tiver validacao juridica, o termo
+e assinado no papel e enviado como foto ou PDF junto com a solicitacao.
+
+### Onde acessar
+As telas da guarita tem abas no topo: **Chaves**, **Estacionamento** e
+**Autorizacoes**. As abas usam navegacao interna (NavLink), sem recarregar a
+pagina.
+
+- `/guarita/estacionamento`: portaria.
+- `/guarita/autorizacoes`: solicitacoes e autorizacoes. Aceita
+  `?filtro=analise`, `?filtro=vencendo`, `?filtro=aprovadas`, `?filtro=expiradas`,
+  `?filtro=rejeitadas` e `?filtro=canceladas`.
+
+### Portaria
+- Consulta de placa no padrao antigo (ABC1234) ou Mercosul (ABC1D23).
+- Mostra condutor, veiculo, situacao e validade da autorizacao.
+- So libera a entrada com autorizacao aprovada e dentro da validade; nos outros
+  casos mostra o motivo do bloqueio (sem cadastro, em analise, rejeitada,
+  vencida, cancelada ou veiculo ja no patio).
+- Lista dos veiculos no patio com saida em um clique.
+- Indicadores: no patio agora, entradas hoje, autorizacoes vencendo em 30 dias
+  e solicitacoes aguardando analise.
+- Historico de entradas e saidas com filtro por placa e periodo.
+
+Por LGPD, a portaria ve so nome, vinculo, veiculo e validade. Os documentos
+anexados aparecem apenas na tela de autorizacoes (coordenacao). O back-end
+precisa reforcar isso nas permissoes.
+
+### Autorizacoes
+Ciclo de uma autorizacao:
+
+```
+pendente -> em_analise -> aprovada (6 meses) -> expirada
+                       \-> rejeitada (com motivo)
+aprovada -> cancelada (com motivo)
+```
+
+- A solicitacao exige CNH, documento do veiculo (CRLV) e termo assinado,
+  em PDF, JPG ou PNG de ate 5 MB cada.
+- "Vencendo" = aprovada com 30 dias ou menos de validade.
+- A renovacao cria uma nova solicitacao ligada a anterior (`renovacao_de`). Ao
+  ser aprovada, a nova validade comeca quando a anterior terminar.
+- Uma solicitacao rejeitada pode ser reenviada com os dados preenchidos.
+
+### Arquivos principais
+```
+modulos/estacionamento/
+├── paginas/Portaria.tsx                    # /guarita/estacionamento
+├── paginas/Autorizacoes.tsx                # /guarita/autorizacoes
+├── componentes/AbasGuarita.tsx             # abas entre as telas da guarita
+├── componentes/Placa.tsx                   # placa no estilo Mercosul
+├── componentes/DialogoSolicitacao.tsx      # nova solicitacao / renovacao
+├── componentes/DialogoAnalise.tsx          # analise, aprovacao, rejeicao, cancelamento
+├── componentes/HistoricoVeiculos.tsx       # entradas e saidas
+├── servicos/estacionamento.ts              # unico ponto de acesso aos dados
+├── dados-simulados/estacionamento.ts       # dados de exemplo enquanto nao ha API
+├── tipos/estacionamento.ts
+├── validacoes/estacionamento.ts            # schemas Zod
+└── utilitarios/estacionamento.ts           # placa, validade, rotulos
+```
+
+Usa a mesma variavel `VITE_GUARITA_DADOS_SIMULADOS` do controle de chaves.
+
+### Contrato esperado da API
+Campos em snake_case, datas em ISO 8601, placa sempre normalizada (maiusculas,
+sem hifen). Tipos completos em `tipos/estacionamento.ts`.
+
+| Metodo | Rota | Corpo | Resposta |
+| --- | --- | --- | --- |
+| GET | `/guarita/estacionamento/placas/{placa}` | - | `ConsultaPlaca` |
+| POST | `/guarita/estacionamento/entradas` | `{ placa }` | `MovimentacaoVeiculo` |
+| POST | `/guarita/estacionamento/saidas` | `{ placa }` | `MovimentacaoVeiculo` |
+| GET | `/guarita/estacionamento/patio` | - | `MovimentacaoVeiculo[]` (sem saida) |
+| GET | `/guarita/estacionamento/movimentacoes?placa=` | - | `MovimentacaoVeiculo[]` (mais recente primeiro) |
+| GET | `/guarita/estacionamento/autorizacoes` | - | `AutorizacaoEstacionamento[]` |
+| POST | `/guarita/estacionamento/autorizacoes` | multipart: `nome_completo`, `vinculo`, `telefone?`, `placa`, `modelo`, `cor`, `tipo`, `renovacao_de?`, arquivos `cnh`, `crlv`, `termo` | `AutorizacaoEstacionamento` |
+| POST | `/guarita/estacionamento/autorizacoes/{id}/analise` | - | `AutorizacaoEstacionamento` |
+| POST | `/guarita/estacionamento/autorizacoes/{id}/aprovacao` | - | `AutorizacaoEstacionamento` |
+| POST | `/guarita/estacionamento/autorizacoes/{id}/rejeicao` | `{ motivo }` | `AutorizacaoEstacionamento` |
+| POST | `/guarita/estacionamento/autorizacoes/{id}/cancelamento` | `{ motivo }` | `AutorizacaoEstacionamento` |
+
+Regras que o back-end deve garantir:
+- entrada so com autorizacao `aprovada` e `valida_ate` no futuro;
+- o mesmo veiculo nao entra de novo sem registrar a saida;
+- solicitacao so com os tres anexos; arquivos guardados no Supabase Storage,
+  com `url` assinada e temporaria na resposta;
+- so uma solicitacao em analise por placa; placa com autorizacao valida so pode
+  pedir renovacao;
+- aprovacao vale 6 meses, a partir do fim da anterior quando for renovacao;
+- rejeicao e cancelamento exigem motivo;
+- quem registrou cada operacao vem do token (`analisada_por`,
+  `entrada_registrada_por`, `saida_registrada_por`);
+- erros de regra voltam com `detail` em texto.
+
+O status "expirada" pode ser gravado por uma rotina diaria, mas o front tambem
+calcula a partir de `valida_ate`.

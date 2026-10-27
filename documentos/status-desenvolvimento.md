@@ -92,6 +92,7 @@ modulos conforme o cronograma.
 - Branch `front` sincronizada com a `main`.
 - Tela de controle de chaves da guarita criada em `frontend/src/modulos/estacionamento/` (rota `/guarita/chaves`), com painel por situacao, alerta de atrasadas, retirada so por pessoas autorizadas, devolucao e historico de movimentacoes.
 - Controle de chaves funcionando com dados simulados; contrato da API documentado em `frontend/src/modulos/estacionamento/README.md`.
+- Telas de estacionamento criadas: portaria (`/guarita/estacionamento`) com consulta de placa, entrada, saida, veiculos no patio e historico; autorizacoes (`/guarita/autorizacoes`) com solicitacao com anexos (CNH, CRLV e termo assinado), analise, aprovacao por 6 meses, rejeicao, cancelamento e renovacao.
 
 ## Em andamento
 
@@ -113,7 +114,7 @@ modulos conforme o cronograma.
 - O build frontend ja foi gerado; o npm informou 4 vulnerabilidades (3 moderadas e 1 alta).
 - Validacao do login real com usuario do Supabase e fluxos de autenticacao do browser.
 - Ajuste final da navegacao protegida depois da autenticao real.
-- Rotas da guarita no back-end (`/guarita/chaves`) para substituir os dados simulados do controle de chaves.
+- Rotas da guarita no back-end (`/guarita/chaves` e `/guarita/estacionamento`) para substituir os dados simulados.
 
 ## Bloqueios conhecidos
 
